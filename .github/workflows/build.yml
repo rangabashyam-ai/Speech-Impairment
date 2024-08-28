@@ -1,0 +1,43 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: rangabashyam/speech-impairment:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Deploy Docker container
+        run: |
+          docker pull rangabashyam/speech-impairment:latest
+          docker run -d \
+          --name streamlit_app \
+          --device /dev/snd \
+          -v /etc/asound.conf:/etc/asound.conf \
+          -v /etc/machine-id:/etc/machine-id \
+          -v /run/user/1000/pulse:/run/user/1000/pulse \
+          -e PULSE_SERVER=unix:/run/user/1000/pulse/native \
+          -p 8501:8501 \
+          rangabashyam/speech-impairment:latest
