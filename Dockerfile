@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
     libasound2-dev \
     libportaudio2 \
     portaudio19-dev \
-    git \                    #
+    git \
     ffmpeg \
     && rm -rf /var/lib/apt/lists/*
 
