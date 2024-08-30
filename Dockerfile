@@ -31,4 +31,4 @@ COPY . .
 EXPOSE 8501
 
 # Run Streamlit app
-CMD ["streamlit", "run", "mic.py"]
+CMD ["streamlit", "run", "newdemo.py"]
