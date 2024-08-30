@@ -108,7 +108,8 @@ def main():
     st.title("Real-Time ASR for Speech Impairment")
 
     st.sidebar.header("Transcription Options")
-    model = st.sidebar.selectbox("Select Whisper model", ["large-v3"])
+    # model = st.sidebar.selectbox("Select Whisper model", ["large-v3"])
+    model = st.sidebar.selectbox("Select Whisper model", ["tiny"])
     non_english = st.sidebar.checkbox("Use non-English model")
     energy_threshold = 1000
     record_timeout = 2.0
